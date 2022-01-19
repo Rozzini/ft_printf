@@ -11,89 +11,158 @@
 /* ************************************************************************** */
 #include <stdarg.h>
 //#include <unistd.h>
-/*
-    c - character               'a'
-    s - string                  "example"
-    p - pointer adress          b8000000000000
-    d or i - dec int            382
-    u - unsigned dec int        3456
-    x - unsigned hexdec int     7fa
-    X - same as x but upcase    7FA
-    % - A % followed by another % character will write a single % to the stream.????????
-*/
+
 int ft_print_char(int c)
 {
 	write(1, &c, 1);
-	return (1);
+    return (1);
 }
 
-int ft_print_string()
+int ft_print_string(char * str)
 {
+    int i;
+    int length;
 
+    i = 0;
+    lenght = 0;
+    while (str[i] != '\0')
+    {
+        length += ft_print_char(&str[i]);
+        i++;
+    }
+    return (length);
 }
 
-int ft_print_pointer()
+int ft_put_pointer()
+int ft_print_pointer(unsigned long ptr)
 {
+    int length;
 
+    write(1, "0x", 2);
+    length = 2;
 }
 
-int ft_print_number()
+int ft_print_number(int nbr)
 {
+    char    c;
+    int     length;
 
+    length = 0;
+    if (n == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		return (11);
+	}
+    if (n < 0)
+    {
+        length += ft_print_char('-');
+        n *= -1;
+    }
+    if (n >= 10)
+    {
+		length += ft_print_number(n / 10, fd);
+	c = n % 10 + '0';
+	length += ft_print_char(&c);
+    return (length);
 }
 
-int ft_print_uint()
+int ft_print_uint(unsigned int nbr)
 {
+    char    c;
+    int     length;
 
+    length = 0;
+    if (n == 4294967295)
+	{
+		write(1, "4294967295", 10);
+		return (10);
+	}
+    if (n >= 10)
+    {
+		length += ft_print_uint(n / 10, fd);
+	c = n % 10 + '0';
+	length += ft_print_char(&c);
+    return (length);
 }
 
-int ft_print_hex()
+int ft_print_hex(unsigned int num, char c)
 {
+    int length;
+    int reminder;
+    char    symbol;
 
+    reminder = 0;
+    length = 0;
+    if(num!=0)
+    {
+        reminder=n%16;
+      
+        if(rem<10)
+            symbol = reminder + '0';
+        else
+        {
+            if (c == 'x')
+                symbol = reminder - 10 + 'a';
+            if (c == 'X')
+                symbol = reminder - 10 + 'A';
+        }
+        if (num >= 16)
+            length += ft_print_hex(num / 16, c);
+        length += ft_print_char(&symbol);
+    }
+    else
+        return (ft_print_char('0'));
+    return (length);
 }
 
 int ft_type(va_list args, char c)
 {
-    int total_length;
+    int length;
 
-    total_length = 0;
+    length = 0;
     if (c == 'c')
-        total_length += ft_print_char(va_arg(args, int));
+        length = ft_print_char(va_arg(args, int));
     else if (c == 's')
-        total_length += ft_print_string();
+        length = ft_print_string(va_arg(args, char *));
     else if (c == 'p')
-        total_length += ft_print_pointer();
+        length = ft_print_pointer(va_arg(args, unsigned long));
     else if (c == 'd' || c == 'i')
-        total_length += ft_print_number();
+        length = ft_print_number(va_arg(args, int));
     else if (c == 'u')
-        total_length += ft_print_uint();
+        length = ft_print_uint(va_arg(args, unsigned int));
     else if (c == 'x' || c == 'X')
-        total_length += ft_print_hex();
+        length = ft_print_hex(va_arg(args, unsigned int), c);
     else
-        total_length += ft_print_char('%');
-    return (total_length);
+    {
+        ft_print_char('%');
+        length = 1;
+    }
+    return (length);
 }
 
 int ft_printf(const char *str, ...)
 {
     int i;
-    int total_lenght;
+    int lenght;
     va_list args;
 
     i = 0;
-    total_lenght = 0;
+    lenght = 0;
     va_start(args, str);
     while (str[i] != '\0')
     {
         if (str[i] == '%')
         {
-            total_lenght += ft_type(args, str[i + 1]);
+            lenght += ft_type(args, str[i + 1]);
             i++;
         }
         else
-            total_lenght += ft_printchar(str[i]);
-        i++;
+        {
+            ft_print_char(str[i]);
+            lenght++;
+            i++;
+        }
     }
     va_end(args);
-    return (total_lenght);
+    return (lenght);
 }
