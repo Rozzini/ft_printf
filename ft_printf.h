@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_string.c                                  :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mraspors <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 21:08:33 by mraspors          #+#    #+#             */
-/*   Updated: 2022/01/19 21:08:33 by mraspors         ###   ########.fr       */
+/*   Created: 2022/02/04 15:12:13 by mraspors          #+#    #+#             */
+/*   Updated: 2022/02/08 20:54:36 by mraspors         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_print_string(char * str)
-{
-    int i;
-    int length;
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-    i = 0;
-    lenght = 0;
-    while (str[i] != '\0')
-    {
-        length += ft_print_char(&str[i]);
-        i++;
-    }
-    return (length);
-}
+# include <unistd.h>
+# include <stdlib.h>
+# include <stddef.h>
+# include <stdarg.h>
+
+int	ft_printf(const char *str, ...);
+int	ft_print_uint(unsigned int nbr);
+int	ft_print_string(char *str);
+int	ft_print_pointer(unsigned long ptr);
+int	ft_print_number(int nbr);
+int	ft_print_hex(unsigned int num, char c);
+int	ft_print_char(char c);
+
+#endif

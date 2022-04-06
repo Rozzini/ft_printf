@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_uint.c                                    :+:      :+:    :+:   */
+/*   ft_print_string.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mraspors <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/19 21:09:04 by mraspors          #+#    #+#             */
-/*   Updated: 2022/01/19 21:09:04 by mraspors         ###   ########.fr       */
+/*   Created: 2022/01/19 21:08:33 by mraspors          #+#    #+#             */
+/*   Updated: 2022/02/08 19:04:53 by mraspors         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_print_uint(unsigned int nbr)
-{
-    char    c;
-    int     length;
+#include "ft_printf.h"
 
-    length = 0;
-    if (n == 4294967295)
+int	ft_print_string(char *str)
+{
+	int	i;
+	int	length;
+
+	if (!str)
 	{
-		write(1, "4294967295", 10);
-		return (10);
+		write(1, "(null)", 6);
+		return (6);
 	}
-    if (n >= 10)
-    {
-		length += ft_print_uint(n / 10, fd);
-	c = n % 10 + '0';
-	length += ft_print_char(&c);
-    return (length);
+	i = 0;
+	length = 0;
+	while (str[i] != '\0')
+	{
+		length += ft_print_char(str[i]);
+		i++;
+	}
+	return (length);
 }
